@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://d232ujeh2mytn"]
+
+[ext_resource type="Script" uid="uid://ca4w2kv6kq87k" path="res://scenes/mechanics/register_indicator.gd" id="1_nhxt6"]
+[ext_resource type="Texture2D" uid="uid://c4d5l64mew6xu" path="res://sprites/ui/indicator_bracket.png" id="2_hcj53"]
+
+[node name="register_indicator" type="Node2D"]
+script = ExtResource("1_nhxt6")
+
+[node name="ind_top" type="Sprite2D" parent="."]
+modulate = Color(0.09064867, 0.5887943, 0, 1)
+position = Vector2(0, -20)
+texture = ExtResource("2_hcj53")
+
+[node name="ind_bottom" type="Sprite2D" parent="."]
+modulate = Color(0.09019608, 0.5882353, 0, 1)
+position = Vector2(0, 20)
+rotation = 3.1415927
+texture = ExtResource("2_hcj53")

@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cttnu5wq507fl"]
+
+[ext_resource type="Texture2D" uid="uid://cy55fsan5soql" path="res://sprites/characters/marker_arrow.png" id="1_mjudt"]
+[ext_resource type="Script" uid="uid://ck6an020dc8pf" path="res://scenes/characters/player_character.gd" id="2_fmmsc"]
+[ext_resource type="Texture2D" uid="uid://mrpl035tbera" path="res://sprites/ui/cell_highlight.png" id="3_43osc"]
+
+[node name="player_character" type="Sprite2D"]
+position = Vector2(16, 16)
+texture = ExtResource("1_mjudt")
+script = ExtResource("2_fmmsc")
+
+[node name="movement_indicator" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 0, 0, 0, 0)
+width = 1.0
+default_color = Color(0.470588, 0.905882, 0, 0.835294)
+
+[node name="movement_target_indicator" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(0.470588, 0.905882, 0, 0.835294)
+texture = ExtResource("3_43osc")

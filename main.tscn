@@ -1,0 +1,261 @@
+[gd_scene load_steps=25 format=3 uid="uid://cm65ljq8hddlt"]
+
+[ext_resource type="Script" uid="uid://c77phbv6vtl5c" path="res://LocalState.gd" id="1_0dk1l"]
+[ext_resource type="Script" uid="uid://caegvpy64csgg" path="res://environment.gd" id="2_cd74x"]
+[ext_resource type="Script" uid="uid://be47bl1o8en32" path="res://remote_state.gd" id="2_efxa6"]
+[ext_resource type="PackedScene" uid="uid://dbft1wiouyslx" path="res://scenes/rooms/room_4x4.tscn" id="2_gt87o"]
+[ext_resource type="Shader" uid="uid://ck04xlf7r51bg" path="res://shaders/crt.gdshader" id="2_h42vj"]
+[ext_resource type="PackedScene" uid="uid://g7nagiioscmu" path="res://scenes/rooms/room_4x6.tscn" id="3_cdfwp"]
+[ext_resource type="Shader" uid="uid://c8t5dxb11pfef" path="res://shaders/fogofwar.gdshader" id="3_yaehf"]
+[ext_resource type="PackedScene" uid="uid://cttnu5wq507fl" path="res://scenes/characters/player_character.tscn" id="4_5u46m"]
+[ext_resource type="FontFile" uid="uid://6oct7mfxnbn1" path="res://fonts/DEM-MOMono-400.otf" id="6_02wj8"]
+[ext_resource type="Script" uid="uid://b7ddcsa3j3iph" path="res://time_left_warning.gd" id="6_82xsv"]
+[ext_resource type="Script" uid="uid://dceowf4rbug8v" path="res://game_stage_indicator.gd" id="6_lxf70"]
+[ext_resource type="FontFile" uid="uid://da0j3p20ye8ih" path="res://fonts/DigitalNumbers-Regular.ttf" id="8_10u7b"]
+[ext_resource type="Script" uid="uid://cuyydpnsyinpm" path="res://readiness_indicator.gd" id="10_6kve5"]
+[ext_resource type="PackedScene" uid="uid://ctswnw61xgl72" path="res://scenes/mechanics/draggable_action_stack.tscn" id="10_074og"]
+[ext_resource type="Script" uid="uid://bsce63pbrffo0" path="res://registers.gd" id="12_dg77c"]
+[ext_resource type="PackedScene" uid="uid://bpk14q7b88xec" path="res://scenes/mechanics/register.tscn" id="13_ycdy4"]
+[ext_resource type="PackedScene" uid="uid://1hkr35xhthan" path="res://scenes/characters/enemy_character.tscn" id="14_074og"]
+[ext_resource type="Texture2D" uid="uid://d21301breqkej" path="res://sprites/ui/movement_icon.png" id="14_vivmo"]
+[ext_resource type="Texture2D" uid="uid://bekbkc2v7vtvm" path="res://sprites/ui/shoot_icon.png" id="16_2cqfq"]
+[ext_resource type="PackedScene" uid="uid://ceacnop5ws8is" path="res://scenes/mechanics/action_draggable.tscn" id="19_cegan"]
+[ext_resource type="PackedScene" uid="uid://d232ujeh2mytn" path="res://scenes/mechanics/register_indicator.tscn" id="21_getpj"]
+[ext_resource type="Texture2D" uid="uid://mvl1th4dhcio" path="res://sprites/tiles/doorway.png" id="22_ryguw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hlxfc"]
+shader = ExtResource("2_h42vj")
+shader_parameter/enable_grain = false
+shader_parameter/enable_curving = true
+shader_parameter/enable_scanlines = true
+shader_parameter/enable_chromatic_aberration = true
+shader_parameter/enable_rgb_grid = true
+shader_parameter/enable_vhs_wiggle = true
+shader_parameter/enable_vignette = true
+shader_parameter/brightness_multiplier = 1.20000004768372
+shader_parameter/grain_strength = 0.2500000037253
+shader_parameter/curve_power = 1.025
+shader_parameter/vignette_size = 0.4
+shader_parameter/vignette_smoothness = 0.4
+shader_parameter/scanlines_interval = 11.0
+shader_parameter/scanline_opacity = 0.10000000149012
+shader_parameter/scanline_thickness = 3.0
+shader_parameter/chromatic_aberration_strength = 3.0
+shader_parameter/wiggle = 0.007
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_074og"]
+shader = ExtResource("3_yaehf")
+shader_parameter/player_pos = Vector2(0, 0)
+shader_parameter/map_position_global = Vector2(0, 0)
+shader_parameter/camera_zoom = Vector2(2.5, 2.5)
+shader_parameter/viewport_size = Vector2(1600, 900)
+shader_parameter/distance_threshold = 96.0000045125
+shader_parameter/transition_threshold = 14.5550006438625
+shader_parameter/hidden_color = Color(0, 0, 0, 0.49803922)
+
+[node name="Root" type="Node2D"]
+
+[node name="CRTEffectLayer" type="CanvasLayer" parent="."]
+layer = 3
+
+[node name="CRTEffect" type="ColorRect" parent="CRTEffectLayer"]
+z_as_relative = false
+material = SubResource("ShaderMaterial_hlxfc")
+offset_right = 1613.0
+offset_bottom = 916.0
+mouse_filter = 2
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="ui" type="Node2D" parent="UILayer"]
+z_index = 2
+
+[node name="game_stage_indicator" type="Label" parent="UILayer/ui" node_paths=PackedStringArray("remote_state")]
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 193.0
+offset_bottom = 88.0
+scale = Vector2(0.998686, 1)
+theme_override_fonts/font = ExtResource("6_02wj8")
+theme_override_font_sizes/font_size = 43
+text = "> plan_"
+script = ExtResource("6_lxf70")
+remote_state = NodePath("../../../RemoteState")
+
+[node name="readiness_indicator" type="Label" parent="UILayer/ui" node_paths=PackedStringArray("local_state", "remote_state")]
+visible = false
+offset_left = 3.0
+offset_top = 713.0
+offset_right = 1574.0
+offset_bottom = 781.0
+scale = Vector2(1.01766, 0.944054)
+theme_override_fonts/font = ExtResource("8_10u7b")
+theme_override_font_sizes/font_size = 40
+text = "[ ready to execute ]"
+horizontal_alignment = 1
+script = ExtResource("10_6kve5")
+local_state = NodePath("../../../LocalState")
+remote_state = NodePath("../../../RemoteState")
+
+[node name="time_left_warning" type="Label" parent="UILayer/ui"]
+modulate = Color(0.999718, 0.21332768, 0.16025338, 1)
+offset_left = 445.0
+offset_top = 32.0
+offset_right = 1198.0
+offset_bottom = 104.0
+theme_override_fonts/font = ExtResource("6_02wj8")
+theme_override_font_sizes/font_size = 55
+text = "EXECUTING IN 3.54"
+horizontal_alignment = 1
+script = ExtResource("6_82xsv")
+
+[node name="registers" type="Node2D" parent="UILayer/ui" node_paths=PackedStringArray("local_state", "remote_state")]
+position = Vector2(819.00006, 833)
+scale = Vector2(2.5, 2.5)
+script = ExtResource("12_dg77c")
+register_scene = ExtResource("13_ycdy4")
+register_indicator_scene = ExtResource("21_getpj")
+local_state = NodePath("../../../LocalState")
+remote_state = NodePath("../../../RemoteState")
+
+[node name="ActionStackBasicMove" parent="UILayer/ui" instance=ExtResource("10_074og")]
+modulate = Color(0.27030155, 0.9534455, 0.8129117, 1)
+position = Vector2(100, 500)
+default_sprite = ExtResource("14_vivmo")
+default_type = "basic_move"
+stack_size = 2
+action_scene = ExtResource("19_cegan")
+
+[node name="ActionStackBasicAttack" parent="UILayer/ui" instance=ExtResource("10_074og")]
+modulate = Color(0.98732895, 0.5672304, 0.48576397, 1)
+position = Vector2(99, 586)
+default_sprite = ExtResource("16_2cqfq")
+default_type = "basic_attack"
+stack_size = 1
+action_scene = ExtResource("19_cegan")
+
+[node name="FogOfWarLayer" type="CanvasLayer" parent="."]
+
+[node name="FogOfWar" type="ColorRect" parent="FogOfWarLayer"]
+material = SubResource("ShaderMaterial_074og")
+offset_right = 1606.3248
+offset_bottom = 905.0
+mouse_filter = 2
+
+[node name="LocalState" type="Node2D" parent="." node_paths=PackedStringArray("remote_state", "registers", "countdown_timer")]
+script = ExtResource("1_0dk1l")
+remote_state = NodePath("../RemoteState")
+registers = NodePath("../UILayer/ui/registers")
+countdown_timer = NodePath("../UILayer/ui/time_left_warning")
+
+[node name="RemoteState" type="Node2D" parent="." node_paths=PackedStringArray("player", "environment")]
+script = ExtResource("2_efxa6")
+player = NodePath("../environment/player_character")
+enemy_player_scene = ExtResource("14_074og")
+environment = NodePath("../environment")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 1605.0
+offset_bottom = 892.41736
+scale = Vector2(1, 1.01522)
+mouse_filter = 2
+color = Color(0.0196078, 0.0196078, 0.0196078, 1)
+
+[node name="environment" type="Node2D" parent="." node_paths=PackedStringArray("fog_of_war_effect")]
+position = Vector2(500, 250)
+scale = Vector2(2.5, 2.5)
+script = ExtResource("2_cd74x")
+fog_of_war_effect = NodePath("../FogOfWarLayer/FogOfWar")
+
+[node name="rooms" type="Node2D" parent="environment"]
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="Room4x7" parent="environment/rooms" instance=ExtResource("3_cdfwp")]
+position = Vector2(-128, -128)
+scale = Vector2(1.0000002, 1.0000002)
+
+[node name="Room4x7" parent="environment/rooms/Room4x7" instance=ExtResource("3_cdfwp")]
+position = Vector2(160, -224)
+scale = Vector2(1.0000002, 1.0000002)
+
+[node name="Room4x6" parent="environment/rooms" instance=ExtResource("3_cdfwp")]
+position = Vector2(128.00002, 0)
+scale = Vector2(1.0000001, 1.0000001)
+
+[node name="Room4x8" parent="environment/rooms" instance=ExtResource("3_cdfwp")]
+position = Vector2(-9.536743e-07, -30.800003)
+rotation = -1.5707964
+scale = Vector2(1.0000005, 1.0000005)
+
+[node name="room_4x5" parent="environment/rooms" instance=ExtResource("2_gt87o")]
+scale = Vector2(1.0000002, 1.0000002)
+
+[node name="room_4x6" parent="environment/rooms" instance=ExtResource("2_gt87o")]
+position = Vector2(256, 128)
+scale = Vector2(1.0000002, 1.0000002)
+
+[node name="room_4x4" parent="environment/rooms" instance=ExtResource("2_gt87o")]
+position = Vector2(192, -128)
+scale = Vector2(1.0000001, 1.0000001)
+
+[node name="doorways" type="Node2D" parent="environment"]
+scale = Vector2(0.99999994, 0.99999994)
+
+[node name="Doorway5" type="Sprite2D" parent="environment/doorways"]
+modulate = Color(0.5609366, 0.60304046, 0.5641163, 0.6117647)
+position = Vector2(192.40002, -110.000015)
+scale = Vector2(1.0000002, 1.0000002)
+texture = ExtResource("22_ryguw")
+
+[node name="Doorway4" type="Sprite2D" parent="environment/doorways"]
+modulate = Color(0.5609366, 0.60304046, 0.5641163, 0.6117647)
+position = Vector2(238.40005, 0.7999954)
+rotation = 1.5707964
+scale = Vector2(1.0000002, 1.0000002)
+texture = ExtResource("22_ryguw")
+
+[node name="Doorway8" type="Sprite2D" parent="environment/doorways"]
+modulate = Color(0.5609366, 0.60304046, 0.5641163, 0.6117647)
+position = Vector2(256, 174.80002)
+scale = Vector2(1.0000005, 1.0000005)
+texture = ExtResource("22_ryguw")
+
+[node name="Doorway7" type="Sprite2D" parent="environment/doorways"]
+modulate = Color(0.5609366, 0.60304046, 0.5641163, 0.6117647)
+position = Vector2(143.2, -160)
+rotation = 1.5707964
+scale = Vector2(1.0000019, 1.0000019)
+texture = ExtResource("22_ryguw")
+
+[node name="Doorway6" type="Sprite2D" parent="environment/doorways"]
+modulate = Color(0.5609366, 0.60304046, 0.5641163, 0.6117647)
+position = Vector2(48, -160)
+rotation = 1.5707964
+scale = Vector2(1.000001, 1.000001)
+texture = ExtResource("22_ryguw")
+
+[node name="Doorway3" type="Sprite2D" parent="environment/doorways"]
+modulate = Color(0.5609366, 0.60304046, 0.5641163, 0.6117647)
+position = Vector2(-3.0994415e-06, -80.00001)
+scale = Vector2(1.0000005, 1.0000005)
+texture = ExtResource("22_ryguw")
+
+[node name="Doorway2" type="Sprite2D" parent="environment/doorways"]
+modulate = Color(0.5609366, 0.60304046, 0.5641163, 0.6117647)
+position = Vector2(-1.5258789e-05, 46.000008)
+scale = Vector2(1.0000002, 1.0000002)
+texture = ExtResource("22_ryguw")
+
+[node name="Doorway" type="Sprite2D" parent="environment/doorways"]
+modulate = Color(0.5609366, 0.60304046, 0.5641163, 0.6117647)
+position = Vector2(128.40001, 14.400002)
+scale = Vector2(1.0000001, 1.0000001)
+texture = ExtResource("22_ryguw")
+
+[node name="player_character" parent="environment" node_paths=PackedStringArray("local_state", "remote_state", "environment", "fog_of_war_effect") instance=ExtResource("4_5u46m")]
+local_state = NodePath("../../LocalState")
+remote_state = NodePath("../../RemoteState")
+environment = NodePath("..")
+fog_of_war_effect = NodePath("../../FogOfWarLayer/FogOfWar")
+cell_position = Vector2(5, 3)

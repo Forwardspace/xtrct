@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://1hkr35xhthan"]
+
+[ext_resource type="Texture2D" uid="uid://bx8m12ubpbwae" path="res://sprites/characters/little_guy.png" id="1_h6m1t"]
+[ext_resource type="Script" uid="uid://ic871kc1uic7" path="res://scenes/characters/enemy_character.gd" id="2_e5jg6"]
+
+[node name="enemy_character" type="Sprite2D"]
+position = Vector2(16, 16)
+texture = ExtResource("1_h6m1t")
+script = ExtResource("2_e5jg6")

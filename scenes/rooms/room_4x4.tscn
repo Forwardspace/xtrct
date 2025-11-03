@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dbft1wiouyslx"]
+
+[ext_resource type="Texture2D" uid="uid://c8swhf34451oy" path="res://sprites/tiles/tiles_4x4.png" id="1_idqir"]
+[ext_resource type="Texture2D" uid="uid://c3l0jboycxkt3" path="res://sprites/borders/border_4x4.png" id="2_cpyn3"]
+
+[node name="room_4x4" type="Node2D"]
+
+[node name="Tiles4x4" type="Sprite2D" parent="."]
+modulate = Color(0, 0.6294839, 0, 0.7294118)
+position = Vector2(64, 64)
+texture = ExtResource("1_idqir")
+
+[node name="Border4x4" type="Sprite2D" parent="."]
+modulate = Color(0, 0.83137256, 0, 0.88235295)
+position = Vector2(64, 64)
+texture = ExtResource("2_cpyn3")
